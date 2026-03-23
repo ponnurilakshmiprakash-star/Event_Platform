@@ -17,11 +17,11 @@
         <a href="index.html" style="text-decoration: none;">
             <div class="logo" style="margin-bottom: 2rem;">EventLive</div>
         </a>
-        <h2 id="auth-title">Welcome Back</h2>
-        <p id="auth-subtitle">Log in to your account to continue</p>
+        <h2 id="auth-title">Join EventLive</h2>
+        <p id="auth-subtitle">Create your account to start exploring</p>
 
         <form id="auth-form" autocomplete="off">
-            <div class="form-group" id="name-group" style="display: none;">
+            <div class="form-group" id="name-group" style="display: block;">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" placeholder="John Doe">
             </div>
@@ -33,12 +33,12 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="cta-btn primary-btn auth-submit" id="auth-btn">Sign In</button>
+            <button type="submit" class="cta-btn primary-btn auth-submit" id="auth-btn">Create Account</button>
         </form>
 
         <div class="auth-footer">
-            <span id="toggle-text">Don't have an account?</span>
-            <a href="#" id="auth-toggle">Create one</a>
+            <span id="toggle-text">Already have an account?</span>
+            <a href="#" id="auth-toggle">Sign In</a>
         </div>
     </div>
 
@@ -51,7 +51,7 @@
         const nameGroup = document.getElementById('name-group');
         const toggleText = document.getElementById('toggle-text');
 
-        let isLogin = true;
+        let isLogin = false;
 
         authToggle.addEventListener('click', (e) => {
             e.preventDefault();

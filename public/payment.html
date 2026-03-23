@@ -10,7 +10,7 @@
     <style>
         .checkout-container {
             max-width: 600px;
-            margin: 100px auto;
+            margin: 40px auto;
             padding: 2rem;
         }
 
@@ -159,7 +159,7 @@
             font-size: 0.85rem;
             color: var(--text-muted);
             margin-bottom: 0.5rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .checkout-input,
@@ -456,7 +456,7 @@
                 const isVip = ticketType === 'vip';
                 const tagEl = document.getElementById('summary-tag');
                 tagEl.innerText = ticketType;
-                
+
                 if (isStudent) {
                     tagEl.style.background = 'rgba(16, 185, 129, 0.1)';
                     tagEl.style.color = '#10b981';

@@ -208,7 +208,11 @@
 
             <div class="modal-footer">
                 <div class="total-price" id="total-price-display">Total: ₹0.00</div>
-                <button class="checkout-btn" id="checkout-btn">Checkout</button>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="cta-btn" id="cancel-btn"
+                        style="background: transparent; border: 1px solid var(--glass-border); color: white; padding: 0.5rem 1rem;">Cancel</button>
+                    <button class="checkout-btn" id="checkout-btn">Checkout</button>
+                </div>
             </div>
         </div>
     </div>

@@ -168,6 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const cancelBtn = document.getElementById('cancel-btn');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                bookingModal.style.display = 'none';
+            });
+        }
+
         if (ticketQtyInput) {
             ticketQtyInput.addEventListener('input', () => {
                 const qty = parseInt(ticketQtyInput.value) || 0;
