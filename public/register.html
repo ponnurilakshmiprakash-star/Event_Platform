@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventLive | Sign In</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-container">
+
+    <div class="auth-card fade-in">
+        <a href="index.html" style="text-decoration: none;">
+            <div class="logo" style="margin-bottom: 2rem;">EventLive</div>
+        </a>
+        <h2 id="auth-title">Welcome Back</h2>
+        <p id="auth-subtitle">Log in to your account to continue</p>
+
+        <form id="auth-form" autocomplete="off">
+            <div class="form-group" id="name-group" style="display: none;">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="email@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="cta-btn primary-btn auth-submit" id="auth-btn">Sign In</button>
+        </form>
+
+        <div class="auth-footer">
+            <span id="toggle-text">Don't have an account?</span>
+            <a href="#" id="auth-toggle">Create one</a>
+        </div>
+    </div>
+
+    <script>
+        const authForm = document.getElementById('auth-form');
+        const authToggle = document.getElementById('auth-toggle');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        const authBtn = document.getElementById('auth-btn');
+        const nameGroup = document.getElementById('name-group');
+        const toggleText = document.getElementById('toggle-text');
+
+        let isLogin = true;
+
+        authToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            authForm.reset(); // Clear fields on toggle
+
+            if (isLogin) {
+                authTitle.innerText = 'Welcome Back';
+                authSubtitle.innerText = 'Log in to your account to continue';
+                authBtn.innerText = 'Sign In';
+                toggleText.innerText = "Don't have an account?";
+                authToggle.innerText = 'Create one';
+                nameGroup.style.display = 'none';
+            } else {
+                authTitle.innerText = 'Join EventLive';
+                authSubtitle.innerText = 'Create your account to start exploring';
+                authBtn.innerText = 'Create Account';
+                toggleText.innerText = "Already have an account?";
+                authToggle.innerText = 'Sign In';
+                nameGroup.style.display = 'block';
+            }
+        });
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nameField = document.getElementById('name');
+            const emailField = document.getElementById('email');
+            const passwordField = document.getElementById('password');
+            const email = emailField.value;
+            const password = passwordField.value;
+
+            let users = JSON.parse(localStorage.getItem('eventlive_users') || '[]');
+
+            if (isLogin) {
+                const user = users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    console.log("Login successful!");
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('currentUserEmail', user.email);
+                    localStorage.setItem('userName', user.name);
+                    window.location.href = 'index.html';
+                } else {
+                    alert("Invalid credentials. Please try again.");
+                }
+            } else {
+                if (users.find(u => u.email === email)) {
+                    alert("User already exists with this email.");
+                } else {
+                    const name = nameField && nameField.value ? nameField.value : email.split('@')[0];
+                    const newUser = { name, email, password };
+                    users.push(newUser);
+                    localStorage.setItem('eventlive_users', JSON.stringify(users));
+                    
+                    console.log("Account created successfully!");
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('currentUserEmail', newUser.email);
+                    localStorage.setItem('userName', newUser.name);
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+
+        // Check if already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

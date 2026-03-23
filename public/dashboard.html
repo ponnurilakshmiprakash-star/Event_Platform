@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EventLive</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dashboard-container {
+            padding: 8rem 10% 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .badge-attendee {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .dashboard-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-card h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 1.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .ticket-code {
+            font-family: monospace;
+            color: #94A3B8;
+        }
+
+        .status-pill {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-not-checked {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-paid {
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+    </style>
+    <!-- Authentication and Profile logic handled by app.js -->
+</head>
+
+<body>
+
+    <nav>
+        <a href="index.html" style="text-decoration: none;">
+            <div class="logo">EventLive</div>
+        </a>
+
+        <div class="user-profile" id="profile-container">
+            <a href="dashboard.html" class="my-tickets-link">My Tickets</a>
+            <div class="profile-trigger" id="profile-trigger">
+                <span id="user-display-name">User</span>
+                <div class="avatar">
+                    <img id="avatar-img" src="https://ui-avatars.com/api/?name=User&background=A855F7&color=fff"
+                        alt="Avatar">
+                </div>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="dropdown-arrow">
+                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </div>
+            <div class="profile-dropdown" id="profile-dropdown">
+                <div class="dropdown-header">
+                    <p class="dropdown-user-name" id="dropdown-user-name">User Name</p>
+                    <p class="dropdown-user-email">Premium Member</p>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    My Profile
+                </a>
+                <a href="create-event.html" class="dropdown-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14"></path>
+                    </svg>
+                    Create Event
+                </a>
+                <a href="#" class="dropdown-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Help Center
+                </a>
+                <a href="#" class="dropdown-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path
+                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                        </path>
+                    </svg>
+                    Settings
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item logout-item" id="logout-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Log Out
+                </a>
+                <a href="#" class="dropdown-item delete-item" id="delete-account-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                    Delete Account
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <span class="badge-attendee">Attendee</span>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>My Tickets</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ticket Code</th>
+                            <th>Event</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tickets-table-body">
+                        <!-- Tickets will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>Order History</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        <!-- Orders will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 4rem 10%; background: #000; text-align: center; border-top: 1px solid var(--glass-border);">
+        <a href="index.html" style="text-decoration: none;">
+            <div class="logo" style="margin-bottom: 2rem;">EventLive</div>
+        </a>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 EventLive Inc. All rights reserved. Crafted for
+            the future of events.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ticketsBody = document.getElementById('tickets-table-body');
+            const ordersBody = document.getElementById('orders-table-body');
+
+            const currentUserEmail = localStorage.getItem('currentUserEmail');
+
+            const tickets = JSON.parse(localStorage.getItem('user_tickets') || '[]')
+                .filter(t => t.userEmail === currentUserEmail);
+            const orders = JSON.parse(localStorage.getItem('user_orders') || '[]')
+                .filter(o => o.userEmail === currentUserEmail);
+
+            if (tickets.length === 0) {
+                ticketsBody.innerHTML = '<tr><td colspan="4" class="empty-state">No tickets booked yet.</td></tr>';
+            } else {
+                tickets.forEach(ticket => {
+                    const row = `
+                        <tr>
+                            <td class="ticket-code">${ticket.code}</td>
+                            <td>${ticket.event} (${ticket.date})</td>
+                            <td>${ticket.type}</td>
+                            <td><span class="status-pill status-not-checked">not_checked</span></td>
+                        </tr>
+                    `;
+                    ticketsBody.innerHTML += row;
+                });
+            }
+
+            if (orders.length === 0) {
+                ordersBody.innerHTML = '<tr><td colspan="4" class="empty-state">No order history found.</td></tr>';
+            } else {
+                orders.forEach(order => {
+                    const row = `
+                        <tr>
+                            <td>#${order.id}</td>
+                            <td>${order.timestamp}</td>
+                            <td>${order.amount}</td>
+                            <td class="status-paid">paid</td>
+                        </tr>
+                    `;
+                    ordersBody.innerHTML += row;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
